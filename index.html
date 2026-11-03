@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECOIA – Guardiões do Planeta | Gabriel Silva</title>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --secondary: #4caf50;
+            --accent: #ff9800;
+            --bg: #e8f5e9;
+            --text: #1b5e20;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            max-width: 650px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 { color: var(--primary); margin-bottom: 5px; }
+        .student-tag {
+            background: #c8e6c9;
+            color: #1b5e20;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .stage { display: none; }
+        .stage.active { display: block; }
+        button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: var(--primary); }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .option-btn {
+            background-color: #f1f8e9;
+            color: var(--text);
+            border: 2px solid var(--secondary);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .option-btn:hover { background-color: #c8e6c9; }
+        .feedback { margin-top: 15px; font-weight: bold; }
+        .score { font-size: 1.2rem; font-weight: bold; color: var(--accent); margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>ECOIA – Guardiões do Planeta</h1>
+    <div class="student-tag">Aluno: Gabriel Silva de Oliveira Mendonça | Turma 403</div>
+    
+    <div class="score">Pontuação: <span id="score">0</span></div>
+
+    <!-- TELA INICIAL -->
+    <div id="stage-0" class="stage active">
+        <h2>Bem-vindo ao Jogo Educativo!</h2>
+        <p>Ajude a Inteligência Artificial <b>ECOIA</b> a salvar o meio ambiente e purificar a água da nossa cidade através de desafios de reciclagem e sustentabilidade.</p>
+        <button onclick="nextStage(1)">Começar Missão</button>
+    </div>
+
+    <!-- ETAPA 1: TREINAMENTO DA IA -->
+    <div id="stage-1" class="stage">
+        <h3>Etapa 1: Treinamento da IA (Separação Rápida)</h3>
+        <p>Onde devemos descartar uma <b>Garrafa Plástica (PET)</b>?</p>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(1, true)">Lixeira Vermelha (Plástico)</button>
+            <button class="option-btn" onclick="checkAnswer(1, false)">Lixeira Azul (Papel)</button>
+        </div>
+        <div id="feedback-1" class="feedback"></div>
+    </div>
+
+    <!-- ETAPA 2: LIGAR RESÍDUOS NA LIXEIRA CORRETA -->
+    <div id="stage-2" class="stage">
+        <h3>Etapa 2: Ligar Resíduos à Lixeira</h3>
+        <p>Para qual lixeira vai a <b>Casca de Banana</b> (Material Orgânico)?</p>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(2, false)">Lixeira Amarela (Metal)</button>
+            <button class="option-btn" onclick="checkAnswer(2, true)">Lixeira Marrom / Orgânica</button>
+        </div>
+        <div id="feedback-2" class="feedback"></div>
+    </div>
+
+    <!-- ETAPA 3: QUIZ DO FILTRO CASEIRO -->
+    <div id="stage-3" class="stage">
+        <h3>Etapa 3: Desafio do Filtro de Água</h3>
+        <p>Qual é a principal função do <b>Carvão Ativado</b> no nosso filtro caseiro?</p>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(3, true)">Reter impurezas e eliminar odores</button>
+            <button class="option-btn" onclick="checkAnswer(3, false)">Colorir a água de azul</button>
+        </div>
+        <div id="feedback-3" class="feedback"></div>
+    </div>
+
+    <!-- ETAPA 4: NOVA ETAPA - ECONOMIA DE ÁGUA -->
+    <div id="stage-4" class="stage">
+        <h3>Etapa 4: Missão da Economia de Água</h3>
+        <p>Qual atitude diária ajuda a economizar água potável em casa?</p>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(4, true)">Fechar a torneira ao escovar os dentes</button>
+            <button class="option-btn" onclick="checkAnswer(4, false)">Deixar a mangueira aberta lavando a calçada</button>
+        </div>
+        <div id="feedback-4" class="feedback"></div>
+    </div>
+
+    <!-- TELA FINAL -->
+    <div id="stage-5" class="stage">
+        <h3>🎉 Parabéns, Guardião!</h3>
+        <p>Você concluiu todas as etapas com sucesso e ajudou a ECOIA a proteger o planeta!</p>
+        <p><i>"Ensine a IA. Faça escolhas. Proteja o planeta!"</i></p>
+        <button onclick="restartGame()">Jogar Novamente</button>
+    </div>
+
+</div>
+
+<script>
+    let currentStage = 0;
+    let score = 0;
+
+    function nextStage(stageNum) {
+        document.getElementById(`stage-${currentStage}`).classList.remove('active');
+        currentStage = stageNum;
+        document.getElementById(`stage-${currentStage}`).classList.add('active');
+    }
+
+    function checkAnswer(stageNum, isCorrect) {
+        const feedbackEl = document.getElementById(`feedback-${stageNum}`);
+        if (isCorrect) {
+            feedbackEl.style.color = "green";
+            feedbackEl.innerText = "Correto! Excelente escolha.";
+            score += 25;
+            document.getElementById("score").innerText = score;
+            setTimeout(() => {
+                feedbackEl.innerText = "";
+                nextStage(stageNum + 1);
+            }, 1200);
+        } else {
+            feedbackEl.style.color = "red";
+            feedbackEl.innerText = "Ops! Tente novamente.";
+        }
+    }
+
+    function restartGame() {
+        score = 0;
+        document.getElementById("score").innerText = score;
+        nextStage(0);
+    }
+</script>
+
+</body>
+</html>
